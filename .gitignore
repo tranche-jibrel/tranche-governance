@@ -1,0 +1,14 @@
+flatten/
+build/
+other/
+*.txt
+compound/
+node_modules
+unknown*
+coverage
+coverage.json
+coverageEnv
+.env
+old/
+toDo/
+

@@ -1,0 +1,46 @@
+{
+  "name": "tranche-governance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "truffle compile --all && truffle-flattener contracts/Token.sol > flatten/TokenFlat.sol && truffle-flattener contracts/Timelock.sol > flatten/TimelockFlat.sol && truffle-flattener contracts/GovernorBravoDelegate.sol > flatten/GovernorBravoDelegateFlat.sol && truffle-flattener contracts/GovernorBravoDelegator.sol > flatten/GovernorBravoDelegatorFlat.sol",
+    "docs": "solidity-docgen --solc-settings \"{remappings: ['openzeppelin-solidity=$PWD/node_modules/openzeppelin-solidity', '@onchain-id=$PWD/node_modules/@onchain-id']}\"",
+    "compile": "truffle compile --all",
+    "test": "truffle test ./test/ownerManager.test.js"
+  },
+  "jest": {
+    "verbose": true,
+    "testTimeout": 120000
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tranche-jibrel/tranche-governance.git"
+  },
+  "author": "Jibrel Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tranche-jibrel/tranche-governance/issues"
+  },
+  "homepage": "https://github.com/tranche-jibrel/tranche-governance#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "3.1.0",
+    "@truffle/hdwallet-provider": "1.5.0",
+    "bignumber.js": "^9.0.1",
+    "dotenv": "8.2.0",
+    "mocha": "latest",
+    "solparse": "^2.2.8",
+    "web3": "latest"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "0.5.10",
+    "eth-gas-reporter": "^0.2.22",
+    "ganache-cli": "6.12.1",
+    "ganache-time-traveler": "^1.0.16",
+    "solidity-coverage": "^0.7.16",
+    "solidity-docgen": "^0.5.14",
+    "truffle-contract-size": "^2.0.1",
+    "truffle-flattener": "^1.5.0",
+    "truffle-plugin-verify": "^0.5.8"
+  }
+}
