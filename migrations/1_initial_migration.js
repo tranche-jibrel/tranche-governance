@@ -11,8 +11,8 @@ const Token = artifacts.require('Token');
 const PROP_THR = ether('250000');
 
 module.exports = async (deployer, network, accounts) => {
+  const admin = accounts[0];
   if (network == 'development') {
-    const admin = accounts[0];
     console.log(admin);
 
     await deployer.deploy(Token, 'Slice Token', 'SLICE', 20000000, 1664028133);
@@ -30,5 +30,18 @@ module.exports = async (deployer, network, accounts) => {
     await tlInstance.setSliceGovAddress(sgInstance.address)
 
     await sgInstance.initialize(tlInstance.address, sInstance.address, 17280, 1, PROP_THR)
+  } else if (network == 'kovan') {
+    const { SLICE_ADDRESS } = process.env;
+    await deployer.deploy(Timelock, admin, 172800);  // 2 days
+    const tlInstance = await Timelock.deployed();
+    console.log(tlInstance.address);
+
+    await deployer.deploy(SliceGovernor);
+    const sgInstance = await SliceGovernor.deployed();
+    console.log(sgInstance.address);
+
+    await tlInstance.setSliceGovAddress(sgInstance.address)
+
+    await sgInstance.initialize(tlInstance.address, SLICE_ADDRESS, 17280, 1, PROP_THR)
   }
 };
