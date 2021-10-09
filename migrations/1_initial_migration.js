@@ -34,11 +34,11 @@ module.exports = async (deployer, network, accounts) => {
     const { SLICE_ADDRESS } = process.env;
     await deployer.deploy(Timelock, admin, 172800);  // 2 days
     const tlInstance = await Timelock.deployed();
-    console.log(tlInstance.address);
+    console.log('TIME_LOCK_ADDRESS=', tlInstance.address);
 
     await deployer.deploy(SliceGovernor);
     const sgInstance = await SliceGovernor.deployed();
-    console.log(sgInstance.address);
+    console.log('SLICE_GOVERNANCE=', sgInstance.address);
 
     await tlInstance.setSliceGovAddress(sgInstance.address)
 
