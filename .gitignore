@@ -11,4 +11,4 @@ coverageEnv
 .env
 old/
 toDo/
-
+dist/
