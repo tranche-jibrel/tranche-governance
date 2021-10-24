@@ -2,6 +2,9 @@ const {
   BN,
   ether
 } = require('@openzeppelin/test-helpers');
+const {
+  encodeParameters,
+} = require('../test/Utils/Ethereum');
 
 const Timelock = artifacts.require('Timelock');
 const SliceGovernor = artifacts.require('SliceGovernor');
@@ -32,16 +35,33 @@ module.exports = async (deployer, network, accounts) => {
     await sgInstance.initialize(tlInstance.address, sInstance.address, 17280, 1, PROP_THR)
   } else if (network == 'kovan') {
     const { SLICE_ADDRESS } = process.env;
+    // const slice = await Token.at(SLICE_ADDRESS);
+    // let targets = [admin];
+    // let values = ["0"];
+    // let signatures = ["getBalanceOf(address)"];
+    // let callDatas = [encodeParameters(['address'], [admin])];
+
     await deployer.deploy(Timelock, admin, 172800);  // 2 days
     const tlInstance = await Timelock.deployed();
-    console.log('TIME_LOCK_ADDRESS=', tlInstance.address);
+    console.log(tlInstance.address);
 
     await deployer.deploy(SliceGovernor);
     const sgInstance = await SliceGovernor.deployed();
-    console.log('SLICE_GOVERNANCE=', sgInstance.address);
+    console.log(sgInstance.address);
 
+    console.log('setgovaddress')  
     await tlInstance.setSliceGovAddress(sgInstance.address)
-
+    
+    console.log('initialize')
     await sgInstance.initialize(tlInstance.address, SLICE_ADDRESS, 17280, 1, PROP_THR)
+
+    // console.log('delegating')
+    // await slice.delegate(admin)
+    // console.log('proposing')
+    // await sgInstance.propose(targets, values, signatures, callDatas, 'do nothing')
+
+    // proposalId = await sgInstance.latestProposalIds(admin)
+    // trivialProposal = await sgInstance.proposals(proposalId)
+    // console.log(JSON.stringify(trivialProposal, ["id", "proposer", "eta", "startBlock", "endBlock", "forVotes", "againstVotes", "abstainVotes", "canceled", "executed"]))
   }
 };
