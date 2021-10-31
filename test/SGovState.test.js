@@ -117,7 +117,8 @@ contract('SliceGovernor#state/1', function(accounts) {
     // travel to end block
     let block = await web3.eth.getBlockNumber();
     console.log(block)
-    for (let i=0; i<18000; i++) {
+    // for (let i=0; i<18000; i++) {
+    for (let i=0; i<100; i++) {  // tests only
       await timeMachine.advanceBlock();
     }
     block = await web3.eth.getBlockNumber();
@@ -139,7 +140,8 @@ contract('SliceGovernor#state/1', function(accounts) {
 
     let block = await web3.eth.getBlockNumber();
     console.log(block)
-    for (let i=0; i<18000; i++) {
+    // for (let i=0; i<18000; i++) {
+    for (let i=0; i<100; i++) {  // tests only
       await timeMachine.advanceBlock();
     }
     block = await web3.eth.getBlockNumber();
@@ -161,7 +163,8 @@ contract('SliceGovernor#state/1', function(accounts) {
 
     let block = await web3.eth.getBlockNumber();
     console.log(block)
-    for (let i=0; i<18000; i++) {
+    // for (let i=0; i<18000; i++) {
+    for (let i=0; i<100; i++) {  // tests only
       await timeMachine.advanceBlock();
     }
     block = await web3.eth.getBlockNumber();
@@ -184,7 +187,8 @@ contract('SliceGovernor#state/1', function(accounts) {
 
     let block = await web3.eth.getBlockNumber();
     console.log(block)
-    for (let i=0; i<18000; i++) {
+    // for (let i=0; i<18000; i++) {
+    for (let i=0; i<100; i++) {  // tests only
       await timeMachine.advanceBlock();
     }
     block = await web3.eth.getBlockNumber();
@@ -234,7 +238,8 @@ contract('SliceGovernor#state/1', function(accounts) {
 
     let block = await web3.eth.getBlockNumber();
     console.log(block)
-    for (let i=0; i<18000; i++) {
+    // for (let i=0; i<18000; i++) {
+    for (let i=0; i<100; i++) {  // tests only
       await timeMachine.advanceBlock();
     }
     block = await web3.eth.getBlockNumber();
@@ -263,6 +268,8 @@ contract('SliceGovernor#state/1', function(accounts) {
 
     expect((await gov.state(newProposalId)).toString()).equal(states['Queued'])
 
+    // console.log((await gov.state(newProposalId)).toString(), states['Queued'])
+
     await gov.execute(newProposalId, { from: acct1 })
 
     expect((await gov.state(newProposalId)).toString()).equal(states['Executed'])
@@ -280,6 +287,8 @@ contract('SliceGovernor#state/1', function(accounts) {
     for (let i = 1; i <= counter; i++) {
       p = await gov.proposals(i)
       console.log(JSON.stringify(p, ["id", "proposer", "eta", "startBlock", "endBlock", "forVotes", "againstVotes", "abstainVotes", "canceled", "executed"]))
+      propState = await gov.state(i)
+      console.log("state: " + propState.toString())
     }
   })
 

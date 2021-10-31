@@ -60,14 +60,19 @@ Tests on Token (only governance part) is 45.57%, other parts tested in token-rot
     </thead>
     <tbody>
         <tr>
+            <td>CrowdProposal</td>
+            <td><code>3.23</code></td>
+            <td>Contract for a single governance crowd proposal.</td>
+        </tr>
+        <tr>
+            <td>CrowdProposalFactory</td>
+            <td><code>7.49</code></td>
+            <td>Contract for governance crowd proposal factory.</td>
+        </tr>
+        <tr>
             <td>SliceGovernor</td>
             <td><code>15.17</code></td>
             <td>Contract for governance (implementation), allowing to add proposals and voting to Slice Holders</td>
-        </tr>
-        <tr>
-            <td>SliceGovernorEvents</td>
-            <td><code>0.06</code></td>
-            <td>Contract for governance events, used by SliceGovernor contract</td>
         </tr>
         <tr>
             <td>SliceGovernorStorage</td>

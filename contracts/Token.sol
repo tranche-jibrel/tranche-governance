@@ -4,7 +4,7 @@
  * @summary: Token with Voting capabilities
  * @authors: Fabio Pacchioni, Ayush Tiwari
  */
-pragma solidity ^0.6.12;
+pragma solidity 0.6.12;
 
 import './Blacklist.sol';
 import '@openzeppelin/contracts/utils/Pausable.sol';

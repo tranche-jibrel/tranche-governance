@@ -71,7 +71,7 @@ contract('SliceGovernor#propose/5', function(accounts) {
     });
 
     it("End block is set to the current block number plus the sum of vote delay and vote period", async () => {
-      expect(Number(trivialProposal.endBlock)).equal(Number(proposalBlock + 1 + 17280 + ""));
+      expect(Number(trivialProposal.endBlock)).equal(Number(proposalBlock + 1 + 80 + ""));
     });
 
     it("ForVotes and AgainstVotes are initialized to zero", async () => {
