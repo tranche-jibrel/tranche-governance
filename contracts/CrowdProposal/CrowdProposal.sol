@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
-import { SliceInterface } from '../IToken.sol';
-import { IGovernorBravo } from '../ISliceGovernor.sol';
+import '../IToken.sol';
+import '../ISliceGovernor.sol';
 
 contract CrowdProposal {
     /// @notice The crowd proposal author
@@ -78,7 +78,7 @@ contract CrowdProposal {
         require(!terminated, 'CrowdProposal::propose: proposal has been terminated');
 
         // Create governance proposal and save proposal id
-        govProposalId = IGovernorBravo(governor).propose(targets, values, signatures, calldatas, description);
+        govProposalId = ISliceGovernor(governor).propose(targets, values, signatures, calldatas, description);
         emit CrowdProposalProposed(address(this), author, govProposalId);
 
         return govProposalId;
@@ -101,7 +101,7 @@ contract CrowdProposal {
     function vote() external {
         require(govProposalId > 0, 'CrowdProposal::vote: gov proposal has not been created yet');
         // Support the proposal, vote value = 1
-        IGovernorBravo(governor).castVote(govProposalId, 1);
+        ISliceGovernor(governor).castVote(govProposalId, 1);
 
         emit CrowdProposalVoted(address(this), govProposalId);
     }

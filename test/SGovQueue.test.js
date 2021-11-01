@@ -69,7 +69,8 @@ contract('SliceGovernor#queue/1', function(accounts) {
 
       let block = await web3.eth.getBlockNumber();
       console.log(block)
-      for (let i=0; i<18000; i++) {
+      // for (let i=0; i<18000; i++) {
+      for (let i=0; i<100; i++) {  // tests only
         await timeMachine.advanceBlock();
       }
       block = await web3.eth.getBlockNumber();
@@ -105,7 +106,8 @@ contract('SliceGovernor#queue/1', function(accounts) {
 
       let block = await web3.eth.getBlockNumber();
       console.log(block)
-      for (let i=0; i<18000; i++) {
+      // for (let i=0; i<18000; i++) {
+      for (let i=0; i<100; i++) {  // tests only
         await timeMachine.advanceBlock();
       }
       block = await web3.eth.getBlockNumber();

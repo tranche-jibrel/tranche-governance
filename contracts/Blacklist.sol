@@ -4,7 +4,7 @@
  * @summary: SLICE token blacklist
  * @author: Fabio Pacchioni
  */
-pragma solidity ^0.6.12;
+pragma solidity 0.6.12;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 

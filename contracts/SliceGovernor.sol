@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.12;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import './SliceGovernorStorage.sol';
@@ -17,6 +17,7 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
 
     /// @notice The minimum setable voting period
     uint public constant MIN_VOTING_PERIOD = 5760; // About 24 hours
+    // uint public constant MIN_VOTING_PERIOD = 60; // Tests only
 
     /// @notice The max setable voting period
     uint public constant MAX_VOTING_PERIOD = 80640; // About 2 weeks
@@ -42,21 +43,6 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
     constructor () public {
         admin = msg.sender;
     }
-    // constructor(
-	// 		address timelock_,
-	// 		address slice_,
-	// 		// address admin_,
-	//         // address implementation_,
-	//         uint votingPeriod_,
-	//         uint votingDelay_,
-    //         uint proposalThreshold_) public {
-    //     // Admin set to msg.sender for initialization
-    //     admin = msg.sender;
-
-    //     initialize(timelock_, slice_, votingPeriod_, votingDelay_, proposalThreshold_);
-    //     // _setImplementation(implementation_);
-	// 	// admin = admin_;
-	// }
 
     /**
       * @notice Used to initialize the contract during delegator contructor
@@ -85,6 +71,10 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
         proposalCount = 0;
     }
 
+    /**
+      * @notice Used to initialize the contract during delegator contructor
+      * @param _newAdmin The address of the Timalock Admin
+      */
     function setTimelockAdmin(address _newAdmin) external {
         require(msg.sender == admin, 'SliceGovernor::setTimelockAdmin: admin only');
         timelock.acceptAdmin(_newAdmin);
@@ -271,7 +261,7 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
     }
 
     /**
-      * @notice Internal function that caries out voting logic
+      * @notice Internal function that carries out voting logic
       * @param voter The voter that is casting their vote
       * @param proposalId The id of the proposal to vote on
       * @param support The support value for the vote. 0=against, 1=for, 2=abstain
@@ -340,20 +330,6 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
         emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
     }
 
-    // /**
-    //   * @notice Initiate the SliceGovernor contract
-    //   * @dev Admin only. Sets initial proposal id which initiates the contract, ensuring a continuous proposal id count
-    //   * @param governorAlpha The address for the Governor to continue the proposal id count from
-    //   */
-    // function _initiate(address governorAlpha) external {
-    //     require(msg.sender == admin, 'SliceGovernor::_initiate: admin only');
-    //     // require(initialProposalId == 0, 'SliceGovernor::_initiate: can only initiate once');
-    //     // proposalCount = GovernorAlpha(governorAlpha).proposalCount();
-    //     // initialProposalId = proposalCount;
-    //     initialProposalId = 0;
-    //     timelock.acceptAdmin();
-    // }
-
     /**
       * @notice Begins transfer of admin rights. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer.
       * @dev Admin function to begin change of admin. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer.
@@ -411,6 +387,5 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
         assembly { chainId := chainid() }
         return chainId;
     }
-
 
 }

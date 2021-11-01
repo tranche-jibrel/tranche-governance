@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.10;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
-import { SliceInterface } from '../IToken.sol';
-import { CrowdProposal } from './CrowdProposal.sol';
+import '../IToken.sol';
+import './CrowdProposal.sol';
 
 contract CrowdProposalFactory {
     /// @notice `SLICE` token contract address

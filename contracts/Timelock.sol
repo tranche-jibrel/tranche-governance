@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.12;
+pragma solidity 0.6.12;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
 // import '@openzeppelin/contracts/access/Ownable.sol';
@@ -19,7 +19,6 @@ contract Timelock {
     uint public constant MAXIMUM_DELAY = 30 days;
 
     address public admin;
-    address public pendingAdmin;
     address public governanceAddress;
     uint public delay;
 
@@ -60,15 +59,7 @@ contract Timelock {
         emit NewAdmin(admin);
     }
 
-    // function setPendingAdmin(address pendingAdmin_) public {
-    //     require(msg.sender == address(this), 'Timelock::setPendingAdmin: Call must come from Timelock.');
-    //     pendingAdmin = pendingAdmin_;
-
-    //     emit NewPendingAdmin(pendingAdmin);
-    // }
-
     function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta) public onlyGovernor returns (bytes32) {
-        // require(msg.sender == admin, 'Timelock::queueTransaction: Call must come from admin.');
         require(eta >= getBlockTimestamp().add(delay), 'Timelock::queueTransaction: Estimated execution block must satisfy delay.');
 
         bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
@@ -79,8 +70,6 @@ contract Timelock {
     }
 
     function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta) public onlyGovernor {
-        // require(msg.sender == admin, 'Timelock::cancelTransaction: Call must come from admin.');
-
         bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
         queuedTransactions[txHash] = false;
 
@@ -88,8 +77,6 @@ contract Timelock {
     }
 
     function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta) public payable onlyGovernor returns (bytes memory) {
-        // require(msg.sender == admin, 'Timelock::executeTransaction: Call must come from admin.');
-
         bytes32 txHash = keccak256(abi.encode(target, value, signature, data, eta));
         require(queuedTransactions[txHash], 'Timelock::executeTransaction: Transaction has not been queued.');
         require(getBlockTimestamp() >= eta, 'Timelock::executeTransaction: Transaction has not surpassed time lock.');
@@ -115,7 +102,6 @@ contract Timelock {
     }
 
     function getBlockTimestamp() internal view returns (uint) {
-        // solium-disable-next-line security/no-block-members
         return block.timestamp;
     }
 }
