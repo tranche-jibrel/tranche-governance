@@ -27,7 +27,7 @@ contract('CrowdProposal', (accounts) => {
     root = accounts[0]
     a1 = accounts[1]
 
-    const minSlice = new BigNumber(200000e18);
+    const minSlice = new BigNumber(1000e18);
 
     beforeEach(async () => {
       
@@ -348,6 +348,7 @@ contract('CrowdProposal', (accounts) => {
         // SLICE stake is withdrawn by an author, so total number of votes for will be less
         // const leftVotes = new BigNumber(await slice.totalSupply.call()).minus(minSlice).toFixed();
         expect(proposalData.againstVotes.toString()).equal('0');
+        expect(proposalData.forVotes.toString()).equal((await slice.balanceOf(author)).toString());
         // expect(proposalData.forVotes.toString()).equal((leftVotes).toString());
 
       })
