@@ -1,7 +1,11 @@
 const { uint, address, encodeParameters, sendRPC, mergeInterface } = require('./Utils/Helpers');
 const BigNumber = require("bignumber.js");
-const { BN, constants, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
-const { web3 } = require('@openzeppelin/test-helpers/src/setup');
+// const { BN, constants, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
+// const { web3 } = require('@openzeppelin/test-helpers/src/setup');
+
+const Web3 = require('web3');
+// Ganache UI on 8545
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 const states =  {
   Pending: '0',

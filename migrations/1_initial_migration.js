@@ -9,14 +9,16 @@ const {
 const Timelock = artifacts.require('Timelock');
 const SliceGovernor = artifacts.require('SliceGovernor');
 const Token = artifacts.require('Token');
+const CrowdProposalFactory = artifacts.require('CrowdProposalFactory');
 
 // const SLICE_ADDRESS = '0x0AeE8703D34DD9aE107386d3eFF22AE75Dd616D1';
 const PROP_THR = ether('250000');
+const SLICE_STAKE_AMOUNT = ether('1000');
 
 module.exports = async (deployer, network, accounts) => {
   const admin = accounts[0];
   if (network == 'development') {
-    console.log(admin);
+    // console.log(admin);
 
     await deployer.deploy(Token, 'Slice Token', 'SLICE', 20000000, 1664028133);
     const sInstance = await Token.deployed();
@@ -33,6 +35,15 @@ module.exports = async (deployer, network, accounts) => {
     await tlInstance.setSliceGovAddress(sgInstance.address)
 
     await sgInstance.initialize(tlInstance.address, sInstance.address, 17280, 1, PROP_THR)
+
+    await deployer.deploy(CrowdProposalFactory, 
+      sInstance.address, 
+      sgInstance.address, 
+      SLICE_STAKE_AMOUNT
+    )
+    const cpfInstance = await CrowdProposalFactory.deployed();
+    console.log(cpfInstance.address);
+
   } else if (network == 'kovan') {
     const { SLICE_ADDRESS } = process.env;
     // const slice = await Token.at(SLICE_ADDRESS);
@@ -54,6 +65,13 @@ module.exports = async (deployer, network, accounts) => {
     
     console.log('initialize')
     await sgInstance.initialize(tlInstance.address, SLICE_ADDRESS, 17280, 1, PROP_THR)
+
+    console.log('CrowdProposalFactory')
+    await deployer.deploy(CrowdProposalFactory, 
+      SLICE_ADDRESS, 
+      sgInstance.address, 
+      SLICE_STAKE_AMOUNT
+    )
 
     // console.log('delegating')
     // await slice.delegate(admin)

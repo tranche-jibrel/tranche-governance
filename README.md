@@ -46,6 +46,10 @@ Tests on Timelock is 83.33%.
 
 Tests on Token (only governance part) is 45.57%, other parts tested in token-rotocol repo, total is 100%. 
 
+Crowd Proposal Factory contract is 100% tested.
+
+Crowd Proposal contract is 100% tested.
+
 [(Back to top)](#slice-governance)
 
 ## Main contracts - Name, Size and Description
@@ -81,7 +85,7 @@ Tests on Token (only governance part) is 45.57%, other parts tested in token-rot
         </tr>
         <tr>
             <td>Timelock</td>
-            <td><code>5.63</code></td>
+            <td><code>5.57</code></td>
             <td>Contract that locks time for voting proposals</td>
         </tr>
         <tr>

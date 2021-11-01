@@ -1,3 +1,7 @@
+const Web3 = require('web3');
+// Ganache UI on 8545
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+
 const { uint, address, encodeParameters, mergeInterface } = require('./Utils/Helpers');
 const BigNumber = require("bignumber.js");
 
@@ -12,7 +16,7 @@ contract('CrowdProposalFactory', (accounts) => {
 
     const minSlice = new BigNumber(1000e18);
 
-    beforeEach(async() => {
+    //beforeEach(async() => {
       root = accounts[0];
       a1 = accounts[1];
 
@@ -34,7 +38,7 @@ contract('CrowdProposalFactory', (accounts) => {
       //   gov.address, 
       //   minSlice
       // );
-
+    it ("settings" , async () => {
       slice = await Token.deployed();
       gov = await SliceGovernor.deployed();
       factory = await CrowdProposalFactory.deployed();
@@ -108,7 +112,7 @@ contract('CrowdProposalFactory', (accounts) => {
             let trx = await factory.createCrowdProposal(targets, values, signatures, callDatas, description, {from: author});
             expect(trx).equal(null);
           } catch (err){
-            expect(err.toString()).equal("Error: Returned error: VM Exception while processing transaction: revert -- Reason given: ERC20: transfer amount exceeds allowance.")
+            expect(err.toString()).equal("Error: Returned error: VM Exception while processing transaction: revert ERC20: transfer amount exceeds allowance -- Reason given: ERC20: transfer amount exceeds allowance.")
           }
 
         });
