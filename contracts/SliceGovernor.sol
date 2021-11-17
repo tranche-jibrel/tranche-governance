@@ -10,14 +10,13 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
     string public constant name = 'Slice Governor';
 
     /// @notice The minimum setable proposal threshold
-    uint public constant MIN_PROPOSAL_THRESHOLD = 200000e18; // 200,000 slice
+    uint public constant MIN_PROPOSAL_THRESHOLD = 100000e18; // 100,000 slice
 
     /// @notice The maximum setable proposal threshold
-    uint public constant MAX_PROPOSAL_THRESHOLD = 300000e18; //300,000 slice
+    uint public constant MAX_PROPOSAL_THRESHOLD = 20000000e18; //20,000,000 slice
 
     /// @notice The minimum setable voting period
     uint public constant MIN_VOTING_PERIOD = 5760; // About 24 hours
-    // uint public constant MIN_VOTING_PERIOD = 60; // Tests only
 
     /// @notice The max setable voting period
     uint public constant MAX_VOTING_PERIOD = 80640; // About 2 weeks
@@ -29,7 +28,7 @@ contract SliceGovernor is SliceGovernorStorage, SliceGovernorEvents {
     uint public constant MAX_VOTING_DELAY = 40320; // About 1 week
 
     /// @notice The number of votes in support of a proposal required in order for a quorum to be reached and for a vote to succeed
-    uint public constant quorumVotes = 400000e18; // 400,000 = 4% of slice
+    uint public constant quorumVotes = 3000000e18; // 3,000,000 = 15% of slice
 
     /// @notice The maximum number of actions that can be included in a proposal
     uint public constant proposalMaxOperations = 10; // 10 actions
