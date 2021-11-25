@@ -36,9 +36,9 @@ module.exports = async (deployer, network, accounts) => {
 
     await sgInstance.initialize(tlInstance.address, sInstance.address, 17280, 1, PROP_THR)
 
-    await deployer.deploy(CrowdProposalFactory, 
-      sInstance.address, 
-      sgInstance.address, 
+    await deployer.deploy(CrowdProposalFactory,
+      sInstance.address,
+      sgInstance.address,
       SLICE_STAKE_AMOUNT
     )
     const cpfInstance = await CrowdProposalFactory.deployed();
@@ -54,24 +54,25 @@ module.exports = async (deployer, network, accounts) => {
 
     await deployer.deploy(Timelock, admin, 172800);  // 2 days
     const tlInstance = await Timelock.deployed();
-    console.log(tlInstance.address);
+    console.log("TIME_LOCK_ADDRESS=", tlInstance.address);
 
     await deployer.deploy(SliceGovernor);
     const sgInstance = await SliceGovernor.deployed();
-    console.log(sgInstance.address);
+    console.log("SLICE_GOVERNANCE", sgInstance.address);
 
-    console.log('setgovaddress')  
+    console.log('control in set slice gov')
     await tlInstance.setSliceGovAddress(sgInstance.address)
-    
-    console.log('initialize')
-    await sgInstance.initialize(tlInstance.address, SLICE_ADDRESS, 17280, 1, PROP_THR)
+
+    console.log('control in initialize')
+    await sgInstance.initialize(tlInstance.address, SLICE_ADDRESS, 5760, 1, PROP_THR)
 
     console.log('CrowdProposalFactory')
-    await deployer.deploy(CrowdProposalFactory, 
-      SLICE_ADDRESS, 
-      sgInstance.address, 
+    const crowdProposalInstance = await deployer.deploy(CrowdProposalFactory,
+      SLICE_ADDRESS,
+      sgInstance.address,
       SLICE_STAKE_AMOUNT
     )
+    console.log("CROWD_PROPOSAL_ADDRESS=", crowdProposalInstance.address);
 
     // console.log('delegating')
     // await slice.delegate(admin)
